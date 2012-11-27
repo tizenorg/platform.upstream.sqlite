@@ -71,7 +71,7 @@ application which supports the Qt database plug-ins.
 %setup -q -n sqlite-autoconf-%tarversion
 
 %build
-export CFLAGS="-DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_FTS4"
+%autogen
 %configure --disable-static
 make
 
@@ -85,7 +85,6 @@ make
 %files
 %defattr(-,root,root)
 /usr/bin/sqlite3
-%doc %{_mandir}/man1/*
 
 %files -n libsqlite3
 %defattr(-,root,root)
@@ -97,3 +96,4 @@ make
 %{_libdir}/libsqlite*.so
 %{_libdir}/pkgconfig/sqlite3.pc
 
+%docs_package
