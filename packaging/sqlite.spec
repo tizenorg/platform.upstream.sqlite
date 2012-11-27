@@ -71,6 +71,7 @@ application which supports the Qt database plug-ins.
 %setup -q -n sqlite-autoconf-%tarversion
 
 %build
+chmod +x autogen.sh
 %autogen
 %configure --disable-static
 make
