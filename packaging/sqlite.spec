@@ -8,13 +8,11 @@ Url:            http://www.sqlite.org/
 Group:          Productivity/Databases/Servers
 Source0:        sqlite-autoconf-%tarversion.tar.gz
 Source1:        baselibs.conf
-#
-BuildRequires:  pkg-config
 BuildRequires:  readline-devel
+BuildRequires:  pkgconfig(pkg-config)
 Requires:       libsqlite3 = %{version}
 Provides:       sqlite = %{version}
 Obsoletes:      sqlite < %{version}
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 
 %description
 SQLite is a C library that implements an embeddable SQL database
@@ -71,7 +69,7 @@ application which supports the Qt database plug-ins.
 %setup -q -n sqlite-autoconf-%tarversion
 
 %build
-CFLAGS=`echo $RPM_OPT_FLAGS |sed -e 's/-ffast-math//g'`
+CFLAGS=`echo %{optflags} |sed -e 's/-ffast-math//g'`
 chmod +x autogen.sh
 %autogen
 %configure --disable-static
@@ -86,7 +84,7 @@ make
 
 %files
 %defattr(-,root,root)
-/usr/bin/sqlite3
+%{_bindir}/sqlite3
 
 %files -n libsqlite3
 %defattr(-,root,root)
@@ -94,7 +92,7 @@ make
 
 %files devel
 %defattr(-,root,root)
-/usr/include/*.h
+%{_includedir}/*.h
 %{_libdir}/libsqlite*.so
 %{_libdir}/pkgconfig/sqlite3.pc
 
