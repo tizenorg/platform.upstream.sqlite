@@ -71,6 +71,7 @@ application which supports the Qt database plug-ins.
 %setup -q -n sqlite-autoconf-%tarversion
 
 %build
+CFLAGS=`echo $RPM_OPT_FLAGS |sed -e 's/-ffast-math//g'`
 chmod +x autogen.sh
 %autogen
 %configure --disable-static
