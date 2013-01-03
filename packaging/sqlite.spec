@@ -1,7 +1,7 @@
-Name:           sqlite3
+Name:           sqlite
 Version:        3.7.14
 Release:        0
-License:        SUSE-Public-Domain
+License:        Public-Domain
 %define tarversion 3071400
 Summary:        Embeddable SQL Database Engine
 Url:            http://www.sqlite.org/
@@ -10,9 +10,7 @@ Source0:        sqlite-autoconf-%tarversion.tar.gz
 Source1:        baselibs.conf
 BuildRequires:  readline-devel
 BuildRequires:  pkgconfig(pkg-config)
-Requires:       libsqlite3 = %{version}
-Provides:       sqlite = %{version}
-Obsoletes:      sqlite < %{version}
+Requires:       libsqlite = %{version}
 
 %description
 SQLite is a C library that implements an embeddable SQL database
@@ -26,11 +24,11 @@ directly to and from the database files on disk.
 SQLite can be used via the sqlite command line tool or via any
 application that supports the Qt database plug-ins.
 
-%package -n libsqlite3
+%package -n libsqlite
 Summary:        Shared libraries for the Embeddable SQL Database Engine
 Group:          Development/Libraries/C and C++
 
-%description -n libsqlite3
+%description -n libsqlite
 This package contains the shared libraries for the Embeddable SQL
 Database Engine.
 
@@ -49,7 +47,7 @@ application that supports the Qt database plug-ins.
 Summary:        Embeddable SQL Database Engine
 Group:          Development/Libraries/C and C++
 Requires:       glibc-devel
-Requires:       libsqlite3 = %{version}
+Requires:       libsqlite = %{version}
 Provides:       sqlite-devel = %{version}
 Obsoletes:      sqlite-devel < %{version}
 
@@ -78,15 +76,15 @@ make
 %install
 %make_install
 
-%post -n libsqlite3 -p /sbin/ldconfig
+%post -n libsqlite -p /sbin/ldconfig
 
-%postun -n libsqlite3 -p /sbin/ldconfig
+%postun -n libsqlite -p /sbin/ldconfig
 
 %files
 %defattr(-,root,root)
 %{_bindir}/sqlite3
 
-%files -n libsqlite3
+%files -n libsqlite
 %defattr(-,root,root)
 %{_libdir}/libsqlite*.so.*
 
