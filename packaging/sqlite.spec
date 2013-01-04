@@ -11,6 +11,7 @@ Source1:        baselibs.conf
 BuildRequires:  readline-devel
 BuildRequires:  pkgconfig(pkg-config)
 Requires:       libsqlite = %{version}
+Provides:       sqlite3
 
 %description
 SQLite is a C library that implements an embeddable SQL database
@@ -27,6 +28,7 @@ application that supports the Qt database plug-ins.
 %package -n libsqlite
 Summary:        Shared libraries for the Embeddable SQL Database Engine
 Group:          Development/Libraries/C and C++
+Provides:       libsqlit3
 
 %description -n libsqlite
 This package contains the shared libraries for the Embeddable SQL
@@ -49,8 +51,8 @@ Group:          Development/Libraries/C and C++
 Requires:       glibc-devel
 Requires:       libsqlite = %{version}
 Requires:       sqlite
-Provides:       sqlite-devel = %{version}
-Obsoletes:      sqlite-devel < %{version}
+Provides:       sqlite3-devel = %{version}
+Obsoletes:      sqlite3-devel < %{version}
 
 %description devel
 SQLite is a C library that implements an embeddable SQL database
