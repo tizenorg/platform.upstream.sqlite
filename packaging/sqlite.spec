@@ -48,6 +48,7 @@ Summary:        Embeddable SQL Database Engine
 Group:          Development/Libraries/C and C++
 Requires:       glibc-devel
 Requires:       libsqlite = %{version}
+Requires:       sqlite
 Provides:       sqlite-devel = %{version}
 Obsoletes:      sqlite-devel < %{version}
 
