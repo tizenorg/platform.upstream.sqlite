@@ -5,7 +5,7 @@ License:        Public-Domain
 %define tarversion 3071400
 Summary:        Embeddable SQL Database Engine
 Url:            http://www.sqlite.org/
-Group:          Application Framework/Database
+Group:          System/Database
 Source0:        sqlite-autoconf-%tarversion.tar.gz
 Source1:        baselibs.conf
 BuildRequires:  readline-devel
@@ -27,7 +27,7 @@ application that supports the Qt database plug-ins.
 
 %package -n libsqlite
 Summary:        Shared libraries for the Embeddable SQL Database Engine
-Group:          Application Framework/Database
+Group:          System/Database
 Provides:       libsqlit3
 
 %description -n libsqlite
