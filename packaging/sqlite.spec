@@ -73,7 +73,7 @@ application which supports the Qt database plug-ins.
 CFLAGS=`echo %{optflags} |sed -e 's/-ffast-math//g'`
 chmod +x autogen.sh
 %autogen
-%configure --disable-static
+%configure --disable-static --enable-threadsafe
 make
 
 %install
