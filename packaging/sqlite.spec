@@ -8,6 +8,7 @@ Url:            http://www.sqlite.org/
 Group:          System/Database
 Source0:        sqlite-autoconf-%tarversion.tar.gz
 Source1:        baselibs.conf
+Source1001: 	sqlite.manifest
 BuildRequires:  readline-devel
 BuildRequires:  pkgconfig(pkg-config)
 Requires:       libsqlite = %{version}
@@ -68,6 +69,7 @@ application which supports the Qt database plug-ins.
 
 %prep
 %setup -q -n sqlite-autoconf-%tarversion
+cp %{SOURCE1001} .
 
 %build
 CFLAGS=`echo %{optflags} |sed -e 's/-ffast-math//g'`
@@ -84,14 +86,17 @@ make
 %postun -n libsqlite -p /sbin/ldconfig
 
 %files
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %{_bindir}/sqlite3
 
 %files -n libsqlite
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %{_libdir}/libsqlite*.so.*
 
 %files devel
+%manifest %{name}.manifest
 %defattr(-,root,root)
 %{_includedir}/*.h
 %{_libdir}/libsqlite*.so
