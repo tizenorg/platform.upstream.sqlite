@@ -1,0 +1,8 @@
+Change-Id: I6d3eef95de5a510d5b5d1ab49db7ed5dc806d6e6
+Code-Review+2: Ryan Ware <ware@linux.intel.com>
+Verified+1: Ryan Ware <ware@linux.intel.com>
+Submitted-by: Ryan Ware <ware@linux.intel.com>
+Submitted-at: Mon, 08 Jul 2013 09:39:12 -0700
+Reviewed-on: https://review.tizen.org/gerrit/4927
+Project: platform/upstream/sqlite
+Branch: refs/heads/tizen
