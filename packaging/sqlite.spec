@@ -89,6 +89,7 @@ make
 %manifest %{name}.manifest
 %defattr(-,root,root)
 %{_bindir}/sqlite3
+%license LICENSE.PublicDomain
 
 %files -n libsqlite
 %manifest %{name}.manifest
@@ -99,7 +100,7 @@ make
 %manifest %{name}.manifest
 %defattr(-,root,root)
 %{_includedir}/*.h
-%{_libdir}/libsqlite*.so
-%{_libdir}/pkgconfig/sqlite3.pc
-
+%license LICENSE.PublicDomain
+%{_libdir}/*.so
+%{_libdir}/pkgconfig/*.pc
 %docs_package
