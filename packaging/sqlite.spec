@@ -79,6 +79,11 @@ chmod +x autogen.sh
 make
 
 %install
+rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/license
+cp LICENSE.PublicDomain %{buildroot}/usr/share/license/%{name}
+cp LICENSE.PublicDomain %{buildroot}/usr/share/license/%{name}-devel
+
 %make_install
 
 %post -n libsqlite -p /sbin/ldconfig
@@ -89,6 +94,7 @@ make
 %manifest %{name}.manifest
 %defattr(-,root,root)
 %{_bindir}/sqlite3
+/usr/share/license/%{name}
 
 %files -n libsqlite
 %manifest %{name}.manifest
@@ -99,7 +105,7 @@ make
 %manifest %{name}.manifest
 %defattr(-,root,root)
 %{_includedir}/*.h
-%{_libdir}/libsqlite*.so
-%{_libdir}/pkgconfig/sqlite3.pc
-
+%{_libdir}/*.so
+%{_libdir}/pkgconfig/*.pc
 %docs_package
+/usr/share/license/%{name}-devel
