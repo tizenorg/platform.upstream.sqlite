@@ -82,6 +82,7 @@ make
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/license
 cp LICENSE.PublicDomain %{buildroot}/usr/share/license/%{name}
+cp LICENSE.PublicDomain %{buildroot}/usr/share/license/%{name}-devel
 
 %make_install
 
@@ -90,10 +91,15 @@ cp LICENSE.PublicDomain %{buildroot}/usr/share/license/%{name}
 %postun -n libsqlite -p /sbin/ldconfig
 
 %files
-%manifest sqlite3.manifest
-%{_bindir}/*
-%{_libdir}/*.so.*
+%manifest %{name}.manifest
+%defattr(-,root,root)
+%{_bindir}/sqlite3
 /usr/share/license/%{name}
+
+%files -n libsqlite
+%manifest %{name}.manifest
+%defattr(-,root,root)
+%{_libdir}/libsqlite*.so.*
 
 %files devel
 %manifest %{name}.manifest
@@ -101,4 +107,5 @@ cp LICENSE.PublicDomain %{buildroot}/usr/share/license/%{name}
 %{_includedir}/*.h
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
-/usr/share/license/%{name}
+%docs_package
+/usr/share/license/%{name}-devel
