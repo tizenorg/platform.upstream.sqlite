@@ -1,105 +1,74 @@
-Name:           sqlite
-Version:        3.7.14
-Release:        0
-License:        Public-Domain
-%define tarversion 3071400
-Summary:        Embeddable SQL Database Engine
-Url:            http://www.sqlite.org/
-Group:          System/Database
-Source0:        sqlite-autoconf-%tarversion.tar.gz
-Source1:        baselibs.conf
-Source1001: 	sqlite.manifest
+Name:       sqlite
+Version:    3.8.10.2
+Release:    2
+License:    PD
+
+Summary:    Embeddable SQL Database Engine
+Url:        http://www.sqlite.org/
+Group:      System/Database
+
+Source:     %{name}-%{version}.tar.gz
+
+BuildRequires:  pkg-config
 BuildRequires:  readline-devel
-BuildRequires:  pkgconfig(pkg-config)
-Requires:       libsqlite = %{version}
-Provides:       sqlite3
+
+Requires(post):   /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+
+Patch1:     sqlite_default_journalmode.patch
 
 %description
-SQLite is a C library that implements an embeddable SQL database
-engine. Programs that link with the SQLite library can have SQL
-database access without running a separate RDBMS process.
-
-SQLite is not a client library used to connect to a big database
-server. SQLite is a server and the SQLite library reads and writes
-directly to and from the database files on disk.
-
-SQLite can be used via the sqlite command line tool or via any
-application that supports the Qt database plug-ins.
-
-%package -n libsqlite
-Summary:        Shared libraries for the Embeddable SQL Database Engine
-Group:          System/Database
-Provides:       libsqlit3
-
-%description -n libsqlite
-This package contains the shared libraries for the Embeddable SQL
-Database Engine.
-
-SQLite is a C library that implements an embeddable SQL database
-engine. Programs that link with the SQLite library can have SQL
-database access without running a separate RDBMS process.
-
-SQLite is not a client library used to connect to a big database
-server. SQLite is a server and the SQLite library reads and writes
-directly to and from the database files on disk.
-
-SQLite can be used via the sqlite command line tool or via any
-application that supports the Qt database plug-ins.
+SQLite is a C library that implements an SQL database engine. A large
+subset of SQL92 is supported. A complete database is stored in a
+single disk file. The API is designed for convenience and ease of use.
+Applications that link against SQLite can enjoy the power and
+flexibility of an SQL database without the administrative hassles of
+supporting a separate database server.  Version 2 and version 3 binaries
+are named to permit each to be installed on a single host
+SQLite Encryption Extension supported.
 
 %package devel
-Summary:        Embeddable SQL Database Engine
-Group:          Development/Libraries
-Requires:       glibc-devel
-Requires:       libsqlite = %{version}
-Requires:       sqlite
-Provides:       sqlite3-devel = %{version}
-Obsoletes:      sqlite3-devel < %{version}
+Summary:    Development tools for the sqlite3 embeddable SQL database engine
+Group:      Development/Libraries
+Requires:   %{name} = %{version}-%{release}
 
 %description devel
-SQLite is a C library that implements an embeddable SQL database
-engine. Programs that link with the SQLite library can have SQL
-database access without running a separate RDBMS process.
-
-SQLite is not a client library used to connect to a big database
-server; SQLite is the server. The SQLite library reads and writes
-directly to and from the database files on disk.
-
-SQLite can be used via the sqlite command-line tool or via any
-application which supports the Qt database plug-ins.
+This package contains the header files and development documentation
+for %{name}. If you like to develop programs using %{name}, you will need
+to install %{name}-devel.
 
 %prep
-%setup -q -n sqlite-autoconf-%tarversion
-cp %{SOURCE1001} .
+%setup -q -n %{name}-%{version}
+%patch1 -p1 -b .journal_mode
 
 %build
-CFLAGS=`echo %{optflags} |sed -e 's/-ffast-math//g'`
-chmod +x autogen.sh
-%autogen
-%configure --disable-static --enable-threadsafe
-make
+
+%reconfigure --prefix=%{_prefix} \
+	CFLAGS="$RPM_OPT_FLAGS " \
+    --disable-dependency-tracking \
+	--enable-shared=yes \
+	--enable-static=no \
+	--enable-threadsafe \
+	--enable-icu=no
+
+make %{?jobs:-j%jobs}
 
 %install
+rm -rf %{buildroot}
+
 %make_install
+rm -rf $RPM_BUILD_ROOT/usr/share/man
 
-%post -n libsqlite -p /sbin/ldconfig
+%post -p /sbin/ldconfig
 
-%postun -n libsqlite -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
-%manifest %{name}.manifest
-%defattr(-,root,root)
+%manifest sqlite3.manifest
 %{_bindir}/sqlite3
-
-%files -n libsqlite
-%manifest %{name}.manifest
-%defattr(-,root,root)
 %{_libdir}/libsqlite*.so.*
 
 %files devel
-%manifest %{name}.manifest
-%defattr(-,root,root)
 %{_includedir}/*.h
 %{_libdir}/libsqlite*.so
 %{_libdir}/pkgconfig/sqlite3.pc
-
-%docs_package
