@@ -1,8 +1,8 @@
 Name:           sqlite
-Version:        3.7.14
+Version:        3.8.10.2
 Release:        0
 License:        Public-Domain
-%define tarversion 3071400
+%define tarversion 3081002
 Summary:        Embeddable SQL Database Engine
 Url:            http://www.sqlite.org/
 Group:          System/Database
@@ -75,7 +75,10 @@ cp %{SOURCE1001} .
 CFLAGS=`echo %{optflags} |sed -e 's/-ffast-math//g'`
 chmod +x autogen.sh
 %autogen
-%configure --disable-static --enable-threadsafe
+%configure --disable-dependency-tracking \
+	--enable-shared=yes \
+	--enable-static=no \
+	--enable-threadsafe
 make
 
 %install
