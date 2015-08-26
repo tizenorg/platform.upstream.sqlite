@@ -75,7 +75,10 @@ cp %{SOURCE1001} .
 CFLAGS=`echo %{optflags} |sed -e 's/-ffast-math//g'`
 chmod +x autogen.sh
 %autogen
-%configure --disable-static --enable-threadsafe
+%configure -disable-dependency-tracking \
+	--enable-shared=yes \
+	--enable-static=no \
+	--enable-threadsafe
 make
 
 %install
