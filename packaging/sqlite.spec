@@ -72,6 +72,9 @@ application which supports the Qt database plug-ins.
 cp %{SOURCE1001} .
 
 %build
+export CFLAGS+=" -fvisibility=hidden"
+  export CXXFLAGS+=" -fvisibility=hidden"
+  
 CFLAGS=`echo %{optflags} |sed -e 's/-ffast-math//g'`
 chmod +x autogen.sh
 %autogen
