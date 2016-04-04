@@ -77,6 +77,8 @@ export CFLAGS+=" -fvisibility=hidden"
   
 CFLAGS=`echo %{optflags} |sed -e 's/-ffast-math//g'`
 chmod +x autogen.sh
+export CFLAGS+=" -fvisibility=hidden"
+  export CXXFLAGS+=" -fvisibility=hidden"
 %autogen
 %configure -disable-dependency-tracking \
 	--enable-shared=yes \
